@@ -45,4 +45,9 @@ public class CitaImpl implements ICitaService {
 		return (List<Cita>) dao.findByDay();
 	}
 
+	@Override
+	public List<?> groupByMedico() {
+		return (List<?>) dao.groupByMedico();
+	}
+
 }

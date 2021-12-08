@@ -16,4 +16,6 @@ public interface ICitaService {
 
 	public List<Cita> findByDay();
 
+	public List<?> groupByMedico();
+
 }

@@ -40,6 +40,12 @@ public class CitaRestController {
 	}
 
 	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/citas/medicos")
+	public List<?> getMedicosReporte() {
+		return serv.groupByMedico();
+	}
+
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/citas/hoy")
 	public List<Cita> getCitasHoy() {
 		return serv.findByDay();
