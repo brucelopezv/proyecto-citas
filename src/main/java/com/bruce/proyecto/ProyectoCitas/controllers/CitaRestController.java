@@ -1,5 +1,6 @@
 package com.bruce.proyecto.ProyectoCitas.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -43,6 +45,14 @@ public class CitaRestController {
 	@GetMapping("/citas/medicos")
 	public List<?> getMedicosReporte() {
 		return serv.groupByMedico();
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/citas/medicos/{inicio}/{fin}")
+	public List<?> getMedicosReportePorFecha(
+			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy") Date inicio,
+			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy") Date fin) {
+		return serv.groupByMedicoAndDate(inicio, fin);
 	}
 
 	@Secured({ "ROLE_ADMIN" })

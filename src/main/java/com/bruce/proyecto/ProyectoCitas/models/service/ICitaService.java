@@ -1,5 +1,6 @@
 package com.bruce.proyecto.ProyectoCitas.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.bruce.proyecto.ProyectoCitas.models.entity.Cita;
@@ -17,5 +18,7 @@ public interface ICitaService {
 	public List<Cita> findByDay();
 
 	public List<?> groupByMedico();
+
+	public List<?> groupByMedicoAndDate(Date inicio, Date fin);
 
 }

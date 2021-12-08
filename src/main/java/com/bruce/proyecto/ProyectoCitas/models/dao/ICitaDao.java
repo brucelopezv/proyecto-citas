@@ -1,5 +1,6 @@
 package com.bruce.proyecto.ProyectoCitas.models.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,11 @@ public interface ICitaDao extends JpaRepository<Cita, Long> {
 
 	@Query("select m.nombre, count(*) from Cita c INNER JOIN Medico m ON c.medico = m GROUP BY m.nombre")
 	public List<?> groupByMedico();
+
+	@Query("select m.nombre, count(*) "
+			+ "from Cita c "			
+			+ "INNER JOIN Medico m ON c.medico = m "
+			+ "WHERE (c.fechaCita BETWEEN ?1 AND ?2) "
+			+ "GROUP BY m.nombre")
+	public List<?> groupByMedicoAndDate(Date inicio, Date fin);
 }

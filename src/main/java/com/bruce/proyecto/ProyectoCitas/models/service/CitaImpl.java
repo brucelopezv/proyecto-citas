@@ -1,5 +1,6 @@
 package com.bruce.proyecto.ProyectoCitas.models.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class CitaImpl implements ICitaService {
 	@Override
 	public List<?> groupByMedico() {
 		return (List<?>) dao.groupByMedico();
+	}
+
+	@Override
+	public List<?> groupByMedicoAndDate(Date inicio, Date fin) {
+		return (List<?>) dao.groupByMedicoAndDate(inicio, fin);
 	}
 
 }
