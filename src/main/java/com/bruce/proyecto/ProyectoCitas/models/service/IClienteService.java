@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.bruce.proyecto.ProyectoCitas.models.entity.Cita;
 import com.bruce.proyecto.ProyectoCitas.models.entity.Cliente;
 
 public interface IClienteService {
@@ -17,5 +19,7 @@ public interface IClienteService {
 	public Page<Cliente> findAll(Pageable pageable);
 
 	public Cliente findById(Long id);
+
+	public List<Cita> findCitaByClienteId(Long id);
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,6 +57,11 @@ public class Cita implements Serializable {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private MetodoPago metodoPago;
 
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "estados_id")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	private Estado estado;
+
 	@Column(name = "fecha_cita")
 	@Temporal(TemporalType.DATE)
 	private Date fechaCita;
@@ -69,6 +75,11 @@ public class Cita implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
 	@Temporal(TemporalType.TIME)
 	private Date horaFin;
+
+	@PrePersist
+	public void prePersist() {
+		estado = new Estado(Long.parseLong("1"), "Pendiente");
+	}
 
 	public Long getId() {
 		return id;
@@ -140,6 +151,14 @@ public class Cita implements Serializable {
 
 	public void setHoraFin(Date horaFin) {
 		this.horaFin = horaFin;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 }

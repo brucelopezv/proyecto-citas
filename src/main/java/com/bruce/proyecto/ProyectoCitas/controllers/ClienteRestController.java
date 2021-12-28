@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.bruce.proyecto.ProyectoCitas.models.entity.Cita;
 import com.bruce.proyecto.ProyectoCitas.models.entity.Cliente;
 import com.bruce.proyecto.ProyectoCitas.models.service.ClienteImpl;
 
@@ -39,6 +41,12 @@ public class ClienteRestController {
 	@GetMapping("/clientes")
 	public List<Cliente> getEspecialidades() {
 		return clienteService.findAll();
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/clientes/citas//{id}")
+	public List<Cita> getCitasByCliente(@PathVariable Long id) {
+		return clienteService.findCitaByClienteId(id);
 	}
 
 	@Secured({ "ROLE_ADMIN" })

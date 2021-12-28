@@ -17,8 +17,27 @@ public interface ICitaDao extends JpaRepository<Cita, Long> {
 
 	@Query("select m.nombre, count(*) "
 			+ "from Cita c "			
-			+ "INNER JOIN Medico m ON c.medico = m "
-			+ "WHERE (c.fechaCita BETWEEN ?1 AND ?2) "
+			+ "INNER JOIN Medico m ON c.medico.id = m.id "
+			+ "WHERE c.fechaCita "
+			+ "BETWEEN ?1 AND ?2 "
 			+ "GROUP BY m.nombre")
 	public List<?> groupByMedicoAndDate(Date inicio, Date fin);
+	
+	@Query("select s.nombre, count(*) "
+			+ "from Cita c "			
+			+ "INNER JOIN Servicio s ON c.servicio.id = s.id "
+			+ "WHERE c.fechaCita "
+			+ "BETWEEN ?1 AND ?2 "
+			+ "GROUP BY s.nombre")
+	public List<?> groupByServicoiAndDate(Date inicio, Date fin);
+	
+	@Query("select e.descripcion, count(*) "
+			+ "from Cita c "			
+			+ "INNER JOIN Estado e ON c.estado.id = e.id "
+			+ "WHERE c.fechaCita "
+			+ "BETWEEN ?1 AND ?2 "
+			+ "GROUP BY e.descripcion")
+	public List<?> groupByEstadoAndDate(Date inicio, Date fin);
+	
+	
 }

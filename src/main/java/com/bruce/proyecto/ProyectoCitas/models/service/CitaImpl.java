@@ -56,4 +56,14 @@ public class CitaImpl implements ICitaService {
 		return (List<?>) dao.groupByMedicoAndDate(inicio, fin);
 	}
 
+	@Override
+	public List<?> groupByServicioAndDate(Date inicio, Date fin) {
+		return (List<?>) dao.groupByServicoiAndDate(inicio, fin);
+	}
+
+	@Override
+	public List<?> groupByEstadoAndDate(Date inicio, Date fin) {
+		return (List<?>) dao.groupByEstadoAndDate(inicio, fin);
+	}
+
 }

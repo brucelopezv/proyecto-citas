@@ -50,9 +50,27 @@ public class CitaRestController {
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping("/citas/medicos/{inicio}/{fin}")
 	public List<?> getMedicosReportePorFecha(
-			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy") Date inicio,
-			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy") Date fin) {
+			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date inicio,
+			@PathVariable("fin") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date fin) {		
 		return serv.groupByMedicoAndDate(inicio, fin);
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/citas/estados/{inicio}/{fin}")
+	public List<?> getEstadosReportePorFecha(
+			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date inicio,
+			@PathVariable("fin") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date fin) {
+		System.out.println(inicio + " " + fin);
+		System.out.println("Consumio");
+		return serv.groupByEstadoAndDate(inicio, fin);
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/citas/servicios/{inicio}/{fin}")
+	public List<?> getServiciosReportePorFecha(
+			@PathVariable("inicio") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date inicio,
+			@PathVariable("fin") @DateTimeFormat(pattern = "dd-MM-yyyy", iso = DateTimeFormat.ISO.DATE) Date fin) {		
+		return serv.groupByServicioAndDate(inicio, fin);
 	}
 
 	@Secured({ "ROLE_ADMIN" })
@@ -129,6 +147,7 @@ public class CitaRestController {
 			citaActual.setMedico(cita.getMedico());
 			citaActual.setServicio(cita.getServicio());
 			citaActual.setUsuario(cita.getUsuario());
+			citaActual.setEstado(cita.getEstado());
 			citaActualizada = serv.save(citaActual);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar update de cita en base de datos.");

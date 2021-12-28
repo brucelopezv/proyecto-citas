@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bruce.proyecto.ProyectoCitas.models.dao.IClienteDao;
+import com.bruce.proyecto.ProyectoCitas.models.entity.Cita;
 import com.bruce.proyecto.ProyectoCitas.models.entity.Cliente;
 
 @Service
@@ -45,6 +46,11 @@ public class ClienteImpl implements IClienteService {
 	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
 		return dao.findById(id).orElse(null);
+	}
+
+	@Override
+	public List<Cita> findCitaByClienteId(Long id) {
+		return (List<Cita>) dao.findCitaByClienteId(id);
 	}
 
 }

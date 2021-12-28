@@ -20,5 +20,9 @@ public interface ICitaService {
 	public List<?> groupByMedico();
 
 	public List<?> groupByMedicoAndDate(Date inicio, Date fin);
+	
+	public List<?> groupByServicioAndDate(Date inicio, Date fin);
+	
+	public List<?> groupByEstadoAndDate(Date inicio, Date fin);
 
 }

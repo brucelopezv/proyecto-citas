@@ -2,23 +2,18 @@ package com.bruce.proyecto.ProyectoCitas.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "clientes")
@@ -55,9 +50,18 @@ public class Cliente implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.MERGE)
-	@JsonIgnoreProperties({ "cliente", "hibernateLazyInitializer", "handler" })
-	private List<Cita> citas;
+	@Column(name = "telefono")
+	@NotNull(message = "el telefono no puede estar vacio")
+	private Long telefono;
+
+	@Column(name = "identificacion")
+	@NotNull(message = "la identifacion no puede estar vacía")
+	private String identificacion;
+
+	@PrePersist
+	public void prePersist() {
+		this.createdAt = new Date();
+	}
 
 	public Long getId() {
 		return id;
@@ -107,12 +111,20 @@ public class Cliente implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public List<Cita> getCitas() {
-		return citas;
+	public Long getTelefono() {
+		return telefono;
 	}
 
-	public void setCitas(List<Cita> citas) {
-		this.citas = citas;
+	public void setTelefono(Long telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getIdentificacion() {
+		return identificacion;
+	}
+
+	public void setIdentificacion(String identificacion) {
+		this.identificacion = identificacion;
 	}
 
 }
